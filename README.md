@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # MediAssist AI — Healthcare Website Project
 
 **Domain:** Healthcare Technology  
@@ -162,3 +163,6 @@ Before pushing to GitHub:
 - Change the Flask secret key for any shared environment.
 - Never include real patient data.
 - Explain the demo admin credentials in the README only if the repository remains a local educational demo.
+=======
+# MediAssist-AI
+>>>>>>> 5eb37df0a9c3668c04b66e4279b2dc2b435df9e5
