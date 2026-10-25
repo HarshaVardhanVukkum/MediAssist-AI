@@ -1,168 +1,126 @@
-<<<<<<< HEAD
-# MediAssist AI — Healthcare Website Project
+# MediAssist AI — Smarter Healthcare Experience
 
-**Domain:** Healthcare Technology  
-**Category:** Website Development  
-**Level:** Intermediate  
-**Stack:** Python, Flask, SQLite, HTML, CSS, JavaScript  
-**AI approach:** Offline rule-based assistant, with optional Ollama local-model integration
+MediAssist AI is a healthcare website prototype designed to help users explore fictional doctor profiles, manage demo appointments, and access general wellness information through an AI-assistant interface.
 
-## Project overview
+> **Educational demo only.** MediAssist AI is not a medical device or a real patient-record system. It does not diagnose or treat medical conditions, and it is not an emergency service. Doctor profiles and appointment workflows are fictional. Do not enter real patient information.
 
-MediAssist AI is an educational healthcare website prototype that demonstrates:
-- User registration and login with hashed passwords
-- Doctor directory using fictional sample doctors
-- Appointment creation, listing, duplicate-slot checks, and cancellation
-- Patient dashboard
-- General health-information chatbot with an offline fallback
-- Optional integration with a language model running locally through Ollama
-- Admin dashboard with appointment counts, status distribution, and specialty summaries
+## Features
 
-All doctors, schedules, and appointments are fictional. Do not use this prototype to manage real patient information or deliver clinical care.
+- Responsive landing page introducing MediAssist AI.
+- Login and registration interface for demonstrating the user journey.
+- Doctor directory with fictional doctor profiles and specialties.
+- Demo appointment booking, viewing, and cancellation.
+- Patient dashboard summarizing demo appointment activity.
+- Admin analytics dashboard showing appointment counts, statuses, and specialty summaries.
+- AI assistant interface for general wellness and website-navigation questions.
+- Safety notices that explain the prototype's limitations.
 
-## Requirements
+## Screenshots
 
-- Python 3.10 or newer (Python 3.12 recommended)
-- VS Code
-- Internet is not required for the basic application after dependencies are installed. The CSS uses a Google Fonts import as a visual enhancement; it falls back to system fonts if offline.
-- Optional: Ollama and a compatible local model for generative responses
+### Home page
+![MediAssist AI home page](screenshots/home.png)
 
-## Setup on Windows / VS Code
+### Login page
+![MediAssist AI login page](screenshots/login.png)
 
-Open the `MediAssist-AI` folder in VS Code. In the VS Code terminal (PowerShell), run:
+### Admin analytics
+![Admin analytics dashboard](screenshots/admin-analytics.png)
 
-```powershell
-py -3.12 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-python app.py
-```
+### Admin analytics — details
+![Admin analytics details and recent appointments](screenshots/admin-analytics-details.png)
 
-If PowerShell blocks activation, run this for the current terminal only, then activate again:
+### Doctors directory
+![Doctors directory](screenshots/doctors.png)
 
-```powershell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\.venv\Scripts\Activate.ps1
-```
+### AI assistant
+![MediAssist AI assistant](screenshots/ai-assistant.png)
 
-Open http://127.0.0.1:5000 in your browser.
+### Patient dashboard
+![Patient dashboard](screenshots/patient-dashboard.png)
 
-If `py -3.12` is not available, use `python -m venv .venv` with an installed Python version 3.10+.
+### Appointment booking
+![Appointment booking form](screenshots/appointments.png)
 
-## Demo administrator login
+### Appointment history
+![Appointment history and booking statuses](screenshots/appointments-bookings.png)
 
-- Email: `admin@mediassist.local`
-- Password: `Admin123!`
+## Technology
 
-This account is created locally on first launch. It is for a local demonstration only. Do not deploy with the default secret key or demo administrator password.
+Update this section to reflect the exact implementation in the repository.
 
-## Optional local AI with Ollama
+- **Backend:** Python / Flask, if used by this version.
+- **Frontend:** HTML, CSS, and JavaScript.
+- **Data storage:** Local demo database, if enabled.
+- **AI assistant:** Document the implementation actually connected to the app (for example, rule-based offline responses or a configured model endpoint). Do not claim that a hosted large language model is connected unless it has been tested on the deployed website.
 
-1. Install Ollama from https://ollama.com/download.
-2. Open a terminal and pull a model supported by your computer, for example:
+## Run locally
 
-   ```powershell
-   ollama pull llama3.2
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/HarshaVardhanVukkum/MediAssist-AI.git
+   cd MediAssist-AI
    ```
 
-3. Start Ollama (the app expects its local API at `http://127.0.0.1:11434`).
-4. In PowerShell, set the environment variable before starting Flask:
+2. Create and activate a virtual environment.
 
+   **Windows PowerShell**
    ```powershell
-   $env:OLLAMA_ENABLED = "true"
-   $env:OLLAMA_MODEL = "llama3.2"
+   py -m venv .venv
+   .\.venv\Scripts\Activate.ps1
+   ```
+
+   **macOS / Linux**
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
+
+3. Install dependencies (if your project contains `requirements.txt`):
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Start the application using the command for your project. For a typical Flask app with `app.py`:
+
+   ```bash
    python app.py
    ```
 
-The local model is optional. If it is unavailable, the chatbot falls back to the offline rule-based assistant. Model responses can be inaccurate; the app gives general information only and must not be used for diagnosis or treatment.
+5. Open the local URL printed by the server, commonly `http://127.0.0.1:5000`.
 
-## Feature walkthrough
+## Deployment notes
 
-1. Create a patient account from **Get started**.
-2. Log in and open **Appointments**.
-3. Select a demo doctor, future date, time, and brief non-sensitive reason.
-4. Review or cancel your booking.
-5. Open **AI Assistant** and try the suggested questions.
-6. Log out and sign in with the demo administrator credentials.
-7. Review **Admin** analytics. Mark a booked appointment as completed if desired.
+For a typical Flask application on Render, the build command is often:
 
-## Testing checklist
+```bash
+pip install -r requirements.txt
+```
 
-- [ ] Home page and doctor directory load.
-- [ ] Registration succeeds with a new email.
-- [ ] Duplicate email registration is rejected.
-- [ ] Incorrect login credentials are rejected.
-- [ ] A patient can book a future appointment.
-- [ ] The same doctor/date/time cannot be booked twice while the first is active.
-- [ ] A patient can cancel their own booked appointment.
-- [ ] A patient cannot open `/admin`.
-- [ ] Admin login displays appointment and user counts.
-- [ ] Chatbot answers the appointment and wellness prompts.
-- [ ] Empty chatbot message is handled.
-- [ ] Emergency-keyword message returns emergency guidance.
-- [ ] App works with Ollama disabled.
+The start command may be:
 
-## Known limitations
+```bash
+gunicorn app:app
+```
 
-- This is a local assignment prototype, not a production healthcare service.
-- Demo doctor schedules are descriptive only; the app does not enforce each doctor's published hours.
-- No email, SMS, calendar, payment, or real appointment service is connected.
-- Basic form/session protections are suitable only for local demonstration; a public deployment needs CSRF protection, secure production configuration, rate limiting, audit controls, privacy review, and security testing.
-- The chatbot does not have a verified medical knowledge base and is not a clinical decision-support tool.
-- The default Flask development server must not be exposed to the public internet.
+This assumes the Flask application instance is named `app` inside `app.py` and that `gunicorn` is listed in `requirements.txt`. Confirm these commands against the actual source before deploying.
 
-## Suggested assignment report
+Set required API keys and service URLs through Render environment variables. Never commit secrets, `.env` files, passwords, or access tokens. Ollama running on a personal computer is not automatically accessible to a hosted Render service.
 
-### Title
-MediAssist AI: Smart Healthcare Appointment and Patient Support Website
+## Safety and privacy
 
-### Problem statement
-People can find it inconvenient to keep track of appointments and locate basic healthcare information. This prototype demonstrates how a web application can organise demo bookings and provide a simple general-information assistant in one interface.
+- This project is a prototype for demonstration and learning.
+- Do not use it to make medical decisions or delay professional care.
+- Do not enter or upload real patient records or sensitive health information.
+- AI responses can be inaccurate and should not replace a qualified healthcare professional.
+- Real-world use would require professional review of authentication, authorization, privacy, security, clinical safety, data retention, and applicable regulatory requirements.
 
-### Objectives
-- Develop a responsive healthcare website.
-- Implement registration, login, and database-backed appointment management.
-- Add an AI-style assistant with an offline fallback and optional local LLM.
-- Summarise appointment data in an admin dashboard.
-- Demonstrate safe handling of sample data and limitations of AI in healthcare.
+## Project owner
 
-### Methodology
-Requirements analysis → UI design → Flask routes and SQLite schema → chatbot integration → analytics → functional testing.
+**Harsha Vardhan**  
+GitHub: [HarshaVardhanVukkum](https://github.com/HarshaVardhanVukkum)
 
-### AI tools used
-- ChatGPT or another coding assistant: project planning, code explanation, debugging support, and test-case generation.
-- Optional Ollama local language model: local natural-language responses.
-- Offline rule-based assistant: deterministic fallback when a local model is not enabled.
+## License
 
-In your final submission, list only the AI tools you actually used and describe your own changes and tests honestly.
-
-### Expected outcome
-A locally running website with patient accounts, demo appointment workflows, an assistant page, and a working admin analytics view.
-
-### Future enhancements
-- Doctor availability calendar and email reminders
-- Secure appointment exports and CSV analytics
-- Accessible multilingual interface
-- Retrieval-based responses from reviewed public health sources
-- Automated test suite and deployment hardening
-
-## Suggested screenshots for submission
-
-1. Home page
-2. Register / login
-3. Doctor directory
-4. Appointment booking form and a saved booking
-5. AI assistant responding to a prompt
-6. Admin analytics after at least two sample bookings
-
-## GitHub readiness
-
-Before pushing to GitHub:
-- Keep `.env`, database files, and personal data out of the repository.
-- Change the Flask secret key for any shared environment.
-- Never include real patient data.
-- Explain the demo admin credentials in the README only if the repository remains a local educational demo.
-=======
-# MediAssist-AI
->>>>>>> 5eb37df0a9c3668c04b66e4279b2dc2b435df9e5
+No license is specified yet. Unless a license is added to this repository, others should not assume they have permission to reuse or redistribute the code.
