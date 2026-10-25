@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | MediAssist AI{% endblock %}
+{% block content %}
+<section class="page-heading"><div><div class="eyebrow">YOUR SPACE</div><h1>Good to see you, {{ session.get('name', 'there').split(' ')[0] }}.</h1><p>Here is your healthcare activity overview.</p></div><a class="btn btn-primary" href="{{ url_for('appointments') }}">＋ Book appointment</a></section>
+<div class="stats-grid">
+<div class="stat-card"><div class="stat-icon blue">▦</div><span class="stat-label">Total appointments</span><strong>{{ appointments|length }}</strong><span class="stat-foot">All your demo bookings</span></div>
+<div class="stat-card"><div class="stat-icon green">◷</div><span class="stat-label">Upcoming visits</span><strong>{{ upcoming_count }}</strong><span class="stat-foot">Booked for today or later</span></div>
+<div class="stat-card"><div class="stat-icon purple">✧</div><span class="stat-label">AI support</span><strong>Available</strong><span class="stat-foot">General information only</span></div>
+</div>
+<section class="panel"><div class="panel-heading"><div><h2>Appointment history</h2><p>Your visits and booking status</p></div><a class="text-link" href="{{ url_for('appointments') }}">Manage appointments ↗</a></div>
+{% if appointments %}
+<div class="table-wrap"><table><thead><tr><th>Doctor</th><th>Specialty</th><th>Date</th><th>Time</th><th>Status</th></tr></thead><tbody>
+{% for a in appointments %}<tr><td><strong>{{ a.doctor_name }}</strong></td><td>{{ a.specialty }}</td><td>{{ a.appointment_date }}</td><td>{{ a.appointment_time }}</td><td><span class="status status-{{ a.status|lower }}">{{ a.status }}</span></td></tr>{% endfor %}
+</tbody></table></div>
+{% else %}<div class="empty-state"><div class="empty-icon">▦</div><h3>No appointments yet</h3><p>Your demo bookings will appear here after you book your first visit.</p><a class="btn btn-primary" href="{{ url_for('appointments') }}">Book an appointment</a></div>{% endif %}
+</section>
+<div class="notice"><strong>Reminder:</strong> MediAssist AI is an educational prototype. It is not a medical record system and should not be used for real patient care.</div>
+{% endblock %}

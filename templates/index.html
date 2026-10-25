@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}MediAssist AI | Smarter Healthcare Access{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow"><span class="pulse-dot"></span> YOUR EVERYDAY HEALTH COMPANION</div>
+    <h1>Healthcare support,<br><span>made more human.</span></h1>
+    <p class="hero-lead">Book a demo appointment, keep your visits organised, and explore general wellness information with our AI-powered support assistant.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{{ url_for('appointments') if session.get('user_id') else url_for('register') }}">Book an appointment <span>↗</span></a>
+      <a class="btn btn-outline" href="{{ url_for('doctors') }}">Explore doctors</a>
+    </div>
+    <div class="trust-line"><span class="trust-icon">✓</span> Simple booking <span class="trust-icon">✓</span> Private demo account <span class="trust-icon">✓</span> Wellness resources</div>
+  </div>
+  <div class="hero-visual">
+    <div class="orb orb-one"></div><div class="orb orb-two"></div>
+    <div class="care-card">
+      <div class="care-card-top"><div class="care-icon">✚</div><div><strong>Your care, organised</strong><small>One simple dashboard</small></div><span class="status-pill">DEMO</span></div>
+      <div class="mini-stat-row"><div class="mini-stat"><span class="mini-stat-icon mint">▦</span><div><small>Appointments</small><strong>Easy to manage</strong></div></div><div class="mini-stat"><span class="mini-stat-icon lavender">✧</span><div><small>AI Assistant</small><strong>Always available</strong></div></div></div>
+      <div class="care-progress-title"><span>Wellness check-in</span><span class="muted">A gentle reminder</span></div>
+      <div class="wellness-note"><span class="wellness-sun">☀</span><div><strong>Make time for yourself</strong><p>Small, consistent habits can support your wellbeing.</p></div></div>
+    </div>
+    <div class="floating-chip chip-top"><span class="chip-icon">♡</span> Patient-first design</div>
+    <div class="floating-chip chip-bottom"><span class="chip-icon">✦</span> AI-assisted support</div>
+  </div>
+</section>
+<section class="section-block">
+  <div class="section-heading"><div><div class="eyebrow">HOW WE HELP</div><h2>Care tools that work together</h2></div><p>Useful tools for a smoother healthcare experience.</p></div>
+  <div class="feature-grid">
+    <article class="feature-card"><div class="feature-icon icon-blue">▦</div><h3>Easy appointments</h3><p>Browse fictional doctors, select a date, and keep your bookings in one place.</p><a href="{{ url_for('appointments') if session.get('user_id') else url_for('register') }}">Get started ↗</a></article>
+    <article class="feature-card"><div class="feature-icon icon-green">✧</div><h3>AI information assistant</h3><p>Explore general wellness information and get help navigating the demo.</p><a href="{{ url_for('assistant') if session.get('user_id') else url_for('register') }}">Meet the assistant ↗</a></article>
+    <article class="feature-card"><div class="feature-icon icon-purple">▤</div><h3>Personal dashboard</h3><p>Review appointment history and check upcoming visits at a glance.</p><a href="{{ url_for('dashboard') if session.get('user_id') else url_for('register') }}">View dashboard ↗</a></article>
+  </div>
+</section>
+<section class="doctors-preview section-block">
+  <div class="section-heading"><div><div class="eyebrow">OUR DEMO DIRECTORY</div><h2>Meet the care team</h2></div><a class="text-link" href="{{ url_for('doctors') }}">View all doctors ↗</a></div>
+  <div class="doctor-grid">
+    {% for doctor in doctors[:3] %}
+    <article class="doctor-card"><div class="doctor-avatar">{{ doctor.name.split(' ')[1][0] if doctor.name.split()|length > 1 else 'D' }}</div><div><h3>{{ doctor.name }}</h3><p class="doctor-specialty">{{ doctor.specialty }}</p><p class="doctor-hours">{{ doctor.availability }}</p></div><span class="doctor-arrow">↗</span></article>
+    {% endfor %}
+  </div>
+  <p class="demo-disclaimer">Demo notice: doctor names, availability, and appointment data are fictional and do not represent a real medical service.</p>
+</section>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Appointments | MediAssist AI{% endblock %}
+{% block content %}
+<section class="page-heading"><div><div class="eyebrow">BOOK AND MANAGE</div><h1>Your appointments</h1><p>Schedule and review your fictional demo visits.</p></div></section>
+<div class="two-column">
+<section class="panel form-panel"><div class="panel-heading"><div><h2>Book a visit</h2><p>Choose a doctor and preferred slot.</p></div><span class="panel-symbol">＋</span></div>
+<form method="post" class="form-stack">
+<label for="doctor_id">Doctor</label><select id="doctor_id" name="doctor_id" required><option value="">Select a doctor</option>{% for doctor in doctors %}<option value="{{ doctor.id }}">{{ doctor.name }} — {{ doctor.specialty }}</option>{% endfor %}</select>
+<div class="form-row"><div><label for="appointment_date">Date</label><input id="appointment_date" type="date" name="appointment_date" min="{{ today }}" required></div><div><label for="appointment_time">Time</label><select id="appointment_time" name="appointment_time" required><option value="">Select time</option><option>09:00</option><option>10:00</option><option>11:00</option><option>12:00</option><option>14:00</option><option>15:00</option><option>16:00</option></select></div></div>
+<label for="reason">Brief reason for visit</label><textarea id="reason" name="reason" maxlength="250" rows="3" required placeholder="Example: routine wellness consultation"></textarea>
+<p class="small-note">Do not enter private medical details. This is a fictional booking demo.</p>
+<button class="btn btn-primary btn-full" type="submit">Confirm demo booking <span>→</span></button>
+</form></section>
+<section class="panel"><div class="panel-heading"><div><h2>Booking tips</h2><p>Before you confirm</p></div></div>
+<div class="tip-list"><div class="tip-item"><span class="tip-number">01</span><div><strong>Choose a specialty</strong><p>Select the fictional doctor best suited to your demo scenario.</p></div></div><div class="tip-item"><span class="tip-number">02</span><div><strong>Check the date and time</strong><p>Booked slots cannot be double-booked for the same doctor.</p></div></div><div class="tip-item"><span class="tip-number">03</span><div><strong>Manage bookings below</strong><p>You can cancel any booking that is still marked Booked.</p></div></div></div>
+<div class="notice notice-soft">This prototype does not send real confirmations, reminders, or calendar invitations.</div></section>
+</div>
+<section class="panel"><div class="panel-heading"><div><h2>Your bookings</h2><p>All your demo appointments</p></div></div>
+{% if appointments %}
+<div class="table-wrap"><table><thead><tr><th>Doctor</th><th>Specialty</th><th>Date</th><th>Time</th><th>Reason</th><th>Status</th><th>Action</th></tr></thead><tbody>
+{% for a in appointments %}<tr><td><strong>{{ a.doctor_name }}</strong></td><td>{{ a.specialty }}</td><td>{{ a.appointment_date }}</td><td>{{ a.appointment_time }}</td><td>{{ a.reason }}</td><td><span class="status status-{{ a.status|lower }}">{{ a.status }}</span></td><td>{% if a.status == 'Booked' %}<form method="post" action="{{ url_for('cancel_appointment', appointment_id=a.id) }}" onsubmit="return confirm('Cancel this demo appointment?')"><button class="btn btn-small btn-danger" type="submit">Cancel</button></form>{% else %}—{% endif %}</td></tr>{% endfor %}
+</tbody></table></div>
+{% else %}<div class="empty-state compact"><h3>No bookings yet</h3><p>Complete the form to create your first demo appointment.</p></div>{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}AI Assistant | MediAssist AI{% endblock %}
+{% block content %}
+<section class="page-heading"><div><div class="eyebrow">AI-POWERED SUPPORT</div><h1>Ask MediAssist</h1><p>Explore general wellness information or get help using this demo website.</p></div><span class="assistant-status"><span class="pulse-dot"></span> Assistant ready</span></section>
+<div class="chat-layout">
+<section class="chat-panel">
+<div class="chat-header"><div class="assistant-avatar">✧</div><div><strong>MediAssist Information Assistant</strong><small><span class="pulse-dot"></span> Offline-ready support</small></div><span class="tag">DEMO AI</span></div>
+<div class="chat-messages" id="chatMessages" aria-live="polite">
+<div class="message assistant-message"><div class="message-avatar">✧</div><div class="message-bubble"><p>Hello, {{ session.get('name', 'there').split(' ')[0] }}! I'm MediAssist. I can share general wellness information and help you navigate appointment booking.</p><p><strong>What would you like to know?</strong></p></div></div>
+</div>
+<div class="suggestion-row"><button class="suggestion" data-prompt="How do I book an appointment?">How to book?</button><button class="suggestion" data-prompt="Can you share general sleep wellness tips?">Sleep wellness</button><button class="suggestion" data-prompt="What can you help me with?">What can you do?</button></div>
+<form id="chatForm" class="chat-input-row"><label class="sr-only" for="chatInput">Your question</label><input id="chatInput" maxlength="1000" placeholder="Ask a general health or website question..." autocomplete="off" required><button class="btn btn-primary" type="submit">Send ↑</button></form>
+</section>
+<aside class="chat-sidebar">
+<div class="panel"><div class="feature-icon icon-green">♡</div><h3>Designed to support, not diagnose</h3><p>The assistant shares general information only. It cannot assess your personal health or replace professional medical advice.</p></div>
+<div class="panel"><div class="feature-icon icon-blue">⌘</div><h3>Try asking</h3><ul class="prompt-list"><li>How do I book a visit?</li><li>What are general hydration tips?</li><li>How can I build a bedtime routine?</li></ul></div>
+<div class="notice"><strong>Emergency?</strong><br>If you may be experiencing an emergency, contact your local emergency services immediately. Do not wait for a chatbot response.</div>
+</aside>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/chat.js') }}"></script>{% endblock %}

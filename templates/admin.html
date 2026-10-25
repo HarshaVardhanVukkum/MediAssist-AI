@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Admin Analytics | MediAssist AI{% endblock %}
+{% block content %}
+<section class="page-heading"><div><div class="eyebrow">OPERATIONS OVERVIEW</div><h1>Admin analytics</h1><p>Monitor demo appointment activity and booking status.</p></div><span class="tag">ADMIN VIEW</span></section>
+<div class="stats-grid">
+<div class="stat-card"><div class="stat-icon blue">▦</div><span class="stat-label">Total appointments</span><strong>{{ total }}</strong><span class="stat-foot">All recorded demo bookings</span></div>
+<div class="stat-card"><div class="stat-icon green">◷</div><span class="stat-label">Currently booked</span><strong>{{ booked }}</strong><span class="stat-foot">Active appointment slots</span></div>
+<div class="stat-card"><div class="stat-icon purple">✓</div><span class="stat-label">Cancelled</span><strong>{{ cancelled }}</strong><span class="stat-foot">Cancelled demo bookings</span></div>
+<div class="stat-card"><div class="stat-icon orange">♙</div><span class="stat-label">Patient accounts</span><strong>{{ users }}</strong><span class="stat-foot">Registered demo users</span></div>
+</div>
+<div class="analytics-grid">
+<section class="panel"><div class="panel-heading"><div><h2>Appointments by specialty</h2><p>Based on recorded bookings</p></div></div>
+{% set max_count = specialty_rows|map(attribute='count')|max if specialty_rows else 1 %}
+<div class="bar-chart">
+{% for item in specialty_rows %}
+<div class="bar-row"><div class="bar-label"><span>{{ item.specialty }}</span><strong>{{ item.count }}</strong></div><div class="bar-track"><div class="bar-fill" style="width: {{ (item.count / (max_count if max_count else 1) * 100)|round(1) }}%"></div></div></div>
+{% endfor %}
+</div></section>
+<section class="panel"><div class="panel-heading"><div><h2>Booking status</h2><p>Current distribution</p></div></div>
+<div class="status-breakdown"><div class="status-ring" style="--booked: {{ (booked / (total if total else 1) * 100)|round(1) }}%"><div><strong>{{ total }}</strong><small>Total</small></div></div><div class="legend-list"><div><span class="legend-dot legend-booked"></span> Booked <strong>{{ booked }}</strong></div><div><span class="legend-dot legend-cancelled"></span> Cancelled <strong>{{ cancelled }}</strong></div><div><span class="legend-dot legend-completed"></span> Completed <strong>{{ total - booked - cancelled }}</strong></div></div></div>
+</section></div>
+<section class="panel"><div class="panel-heading"><div><h2>Recent appointments</h2><p>Latest 100 demo records</p></div></div>
+{% if appointments %}<div class="table-wrap"><table><thead><tr><th>Patient</th><th>Email</th><th>Doctor</th><th>Specialty</th><th>Date</th><th>Time</th><th>Status</th><th>Action</th></tr></thead><tbody>
+{% for a in appointments %}<tr><td><strong>{{ a.patient_name }}</strong></td><td>{{ a.email }}</td><td>{{ a.doctor_name }}</td><td>{{ a.specialty }}</td><td>{{ a.appointment_date }}</td><td>{{ a.appointment_time }}</td><td><span class="status status-{{ a.status|lower }}">{{ a.status }}</span></td><td>{% if a.status == 'Booked' %}<form method="post" action="{{ url_for('complete_appointment', appointment_id=a.id) }}"><button class="btn btn-small btn-outline" type="submit">Complete</button></form>{% else %}—{% endif %}</td></tr>{% endfor %}
+</tbody></table></div>{% else %}<div class="empty-state compact"><h3>No appointment data yet</h3><p>Create a patient account and a booking to populate the dashboard.</p></div>{% endif %}
+</section>
+<div class="notice"><strong>Analytics note:</strong> All values are generated from this local demo database. No real patient information should be used.</div>
+{% endblock %}

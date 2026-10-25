@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Doctors | MediAssist AI{% endblock %}
+{% block content %}
+<section class="page-heading"><div><div class="eyebrow">DEMO DIRECTORY</div><h1>Find a care professional</h1><p>Explore our fictional doctor profiles and specialties.</p></div>{% if session.get('user_id') %}<a class="btn btn-primary" href="{{ url_for('appointments') }}">Book a visit →</a>{% else %}<a class="btn btn-primary" href="{{ url_for('register') }}">Create account →</a>{% endif %}</section>
+<div class="doctor-list">
+{% for doctor in doctors %}
+<article class="doctor-list-card"><div class="doctor-avatar doctor-avatar-large">{{ doctor.name.split(' ')[1][0] if doctor.name.split()|length > 1 else 'D' }}</div><div class="doctor-list-info"><span class="tag">{{ doctor.specialty }}</span><h2>{{ doctor.name }}</h2><p>{{ doctor.availability }}</p><small>Fictional profile for assignment demonstration.</small></div><div>{% if session.get('user_id') %}<a class="btn btn-outline" href="{{ url_for('appointments') }}">Book visit ↗</a>{% else %}<a class="btn btn-outline" href="{{ url_for('login') }}">Log in to book ↗</a>{% endif %}</div></article>
+{% endfor %}
+</div>
+<div class="notice"><strong>Important:</strong> These are fictional profiles. This site does not provide real medical appointments.</div>
+{% endblock %}

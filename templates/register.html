@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Create account | MediAssist AI{% endblock %}
+{% block content %}
+<section class="auth-layout"><div class="auth-aside"><div class="eyebrow">GET STARTED</div><h1>A simpler way<br>to manage visits.</h1><p>Create a demo account to explore appointment booking, your dashboard, and general wellness support.</p><div class="aside-quote">Your demo data stays in a local SQLite database on this computer.</div></div>
+<div class="auth-card"><div class="auth-card-icon">＋</div><h2>Create your account</h2><p class="muted">It only takes a moment.</p>
+<form method="post" class="form-stack">
+<label for="name">Full name</label><input id="name" type="text" name="name" autocomplete="name" required maxlength="80" placeholder="Your name">
+<label for="email">Email address</label><input id="email" type="email" name="email" autocomplete="email" required maxlength="120" placeholder="you@example.com">
+<label for="password">Create password</label><input id="password" type="password" name="password" autocomplete="new-password" minlength="8" required placeholder="At least 8 characters">
+<button class="btn btn-primary btn-full" type="submit">Create account <span>→</span></button>
+</form><p class="auth-switch">Already registered? <a href="{{ url_for('login') }}">Log in</a></p>
+<p class="small-note">Please use fictional details for this educational prototype. Do not enter real medical information.</p>
+</div></section>
+{% endblock %}

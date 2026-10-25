@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Log in | MediAssist AI{% endblock %}
+{% block content %}
+<section class="auth-layout"><div class="auth-aside"><div class="eyebrow">WELCOME BACK</div><h1>Your healthcare<br>journey, in one place.</h1><p>Log in to manage demo appointments and access your health information assistant.</p><div class="aside-quote">“Better organised care starts with a simple step.”</div></div>
+<div class="auth-card"><div class="auth-card-icon">↗</div><h2>Welcome back</h2><p class="muted">Enter your details to sign in.</p>
+<form method="post" class="form-stack">
+<label for="email">Email address</label><input id="email" type="email" name="email" autocomplete="email" required placeholder="you@example.com">
+<label for="password">Password</label><input id="password" type="password" name="password" autocomplete="current-password" required placeholder="At least 8 characters">
+<button class="btn btn-primary btn-full" type="submit">Log in <span>→</span></button>
+</form>
+<p class="auth-switch">New to MediAssist? <a href="{{ url_for('register') }}">Create an account</a></p>
+<div class="demo-login"><strong>Demo administrator</strong><br><span>Email: admin@mediassist.local</span><br><span>Password: Admin123!</span><small>For local demonstration only. Change these credentials before any public deployment.</small></div>
+</div></section>
+{% endblock %}
