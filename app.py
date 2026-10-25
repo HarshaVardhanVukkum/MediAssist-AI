@@ -329,8 +329,11 @@ def complete_appointment(appointment_id):
 def not_found(_error):
     return render_template("404.html"), 404
 
+# Initialize database tables and default data when the app starts
+init_db()
+
 if __name__ == "__main__":
     import os
 
     port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port, debug=False)
+    app.run(host="0.0.0.0", port=port, debug=False)e)
